@@ -5,6 +5,7 @@ import com.github.lianjiatech.retrofit.spring.boot.interceptor.BaseGlobalInterce
 import com.github.lianjiatech.retrofit.spring.boot.interceptor.NetworkInterceptor;
 import com.github.lianjiatech.retrofit.spring.boot.interceptor.ServiceInstanceChooserInterceptor;
 import com.github.lianjiatech.retrofit.spring.boot.retry.BaseRetryInterceptor;
+import com.github.lianjiatech.retrofit.spring.boot.selector.NetworkProxySelector;
 import okhttp3.ConnectionPool;
 import retrofit2.CallAdapter;
 import retrofit2.Converter;
@@ -34,6 +35,8 @@ public class RetrofitConfigBean {
     private Class<? extends CallAdapter.Factory>[] globalCallAdapterFactoryClasses;
 
     private BaseResourceNameParser resourceNameParser;
+
+    private NetworkProxySelector networkProxySelector;
 
     public RetrofitProperties getRetrofitProperties() {
         return retrofitProperties;
@@ -107,5 +110,13 @@ public class RetrofitConfigBean {
 
     public void setResourceNameParser(BaseResourceNameParser resourceNameParser) {
         this.resourceNameParser = resourceNameParser;
+    }
+
+    public NetworkProxySelector getNetworkProxySelector() {
+        return networkProxySelector;
+    }
+
+    public void setNetworkProxySelector(NetworkProxySelector networkProxySelector) {
+        this.networkProxySelector = networkProxySelector;
     }
 }

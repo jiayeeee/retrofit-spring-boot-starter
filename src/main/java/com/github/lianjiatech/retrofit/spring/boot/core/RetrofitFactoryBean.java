@@ -7,6 +7,7 @@ import com.github.lianjiatech.retrofit.spring.boot.config.RetrofitConfigBean;
 import com.github.lianjiatech.retrofit.spring.boot.config.RetrofitProperties;
 import com.github.lianjiatech.retrofit.spring.boot.degrade.*;
 import com.github.lianjiatech.retrofit.spring.boot.interceptor.*;
+import com.github.lianjiatech.retrofit.spring.boot.selector.NetworkProxySelector;
 import com.github.lianjiatech.retrofit.spring.boot.util.ApplicationContextUtils;
 import com.github.lianjiatech.retrofit.spring.boot.util.BeanExtendUtils;
 import com.github.lianjiatech.retrofit.spring.boot.util.RetrofitUtils;
@@ -315,6 +316,11 @@ public class RetrofitFactoryBean<T> implements FactoryBean<T>, EnvironmentAware,
             for (NetworkInterceptor networkInterceptor : networkInterceptors) {
                 okHttpClientBuilder.addNetworkInterceptor(networkInterceptor);
             }
+        }
+
+        NetworkProxySelector networkProxySelector = retrofitConfigBean.getNetworkProxySelector();
+        if (networkProxySelector != null) {
+            okHttpClientBuilder.proxySelector(networkProxySelector);
         }
 
         return okHttpClientBuilder.build();

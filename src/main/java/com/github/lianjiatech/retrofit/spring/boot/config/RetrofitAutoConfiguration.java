@@ -10,6 +10,7 @@ import com.github.lianjiatech.retrofit.spring.boot.interceptor.BaseGlobalInterce
 import com.github.lianjiatech.retrofit.spring.boot.interceptor.NetworkInterceptor;
 import com.github.lianjiatech.retrofit.spring.boot.interceptor.ServiceInstanceChooserInterceptor;
 import com.github.lianjiatech.retrofit.spring.boot.retry.BaseRetryInterceptor;
+import com.github.lianjiatech.retrofit.spring.boot.selector.NetworkProxySelector;
 import com.github.lianjiatech.retrofit.spring.boot.util.ApplicationContextUtils;
 import okhttp3.ConnectionPool;
 import org.slf4j.Logger;
@@ -115,6 +116,10 @@ public class RetrofitAutoConfiguration implements ApplicationContextAware {
         DegradeProperty degrade = retrofitProperties.getDegrade();
         Class<? extends BaseResourceNameParser> resourceNameParser = degrade.getResourceNameParser();
         retrofitConfigBean.setResourceNameParser(resourceNameParser.newInstance());
+
+        // proxy selector
+        NetworkProxySelector networkProxySelector = ApplicationContextUtils.getBean(applicationContext, NetworkProxySelector.class);
+        retrofitConfigBean.setNetworkProxySelector(networkProxySelector);
 
         return retrofitConfigBean;
     }
